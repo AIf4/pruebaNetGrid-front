@@ -156,6 +156,9 @@ export default defineComponent({
       isLoading: false
     }
   },
+  mounted() {
+      
+  },
   methods: {
     async login() {
       try {
@@ -185,6 +188,11 @@ export default defineComponent({
       } catch (error: any) {
         this.isLoading = false;
         console.log(error.response.data.message)
+        this.$toast.open({
+            message: `${error.response.data.message}`,
+            type: 'error',
+            position: 'top'
+        });
       }
     }
   }

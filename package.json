@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@preline/overlay": "^1.4.0",
     "@vuepic/vue-datepicker": "^7.1.0",
     "axios": "^1.5.1",
     "pinia": "^2.1.6",

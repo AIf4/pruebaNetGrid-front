@@ -13,7 +13,6 @@ import router from './router'
 import './assets/main.css'
 import 'vue-toast-notification/dist/theme-default.css';
 
-
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const app = createApp(App)

@@ -24,11 +24,19 @@
           </svg>
         </button>
 
-        <ShowproyectComponent :proyects="proyects"  @showAllProyects="getAllProyects"  @showTask="showTask"/>
+        <ShowproyectComponent
+          :proyects="proyects"
+          @showAllProyects="getAllProyects"
+          @showTask="showTask"
+        />
       </div>
       <div class="h-auto rounded-lg bg-gray-50 lg:col-span-2">
         <CreateProyectComponent v-if="viewCreateProyect" @showAllProyects="getAllProyects" />
-        <ShowtaskComponent v-if="showProyect" :proyect="proyectSelected" @showAllProyects="getAllProyects" />
+        <ShowtaskComponent
+          v-if="showProyect"
+          :proyect="proyectSelected"
+          @getProyectSelected="getProyectSelected"
+        />
       </div>
     </div>
   </div>
@@ -56,6 +64,7 @@ export default defineComponent({
   },
   methods: {
     async getAllProyects() {
+      console.log('entra')
       try {
         const { data } = await axios.get('http://127.0.0.1:8000/api/proyects', {
           headers: {
@@ -64,6 +73,7 @@ export default defineComponent({
           }
         })
         this.proyects = data.proyects
+        console.log(this.proyects)
       } catch (error: any) {
         console.log(error.response.data.message)
       }
@@ -77,7 +87,11 @@ export default defineComponent({
       this.showProyect = true
       this.proyectSelected = proyect
     },
-
+    getProyectSelected(id: any) {
+      this.getAllProyects()
+      this.proyectSelected = this.proyects.find((proyect: any) => (proyect.id = id))
+      console.log("proyecto seleccionado ",this.proyectSelected)
+    }
   },
   components: { CreateProyectComponent, ShowtaskComponent, ShowproyectComponent }
 })

@@ -82,47 +82,107 @@
     </form>
   </div>
 
-  <div class="grid mx-5 my-5 grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4">
+  <div class="w-full grid grid-cols-3 gap-4 content-center">
+    <div class="">
+      <CardtaskComponent :tasks="pendingTask" @deleteTask="deleteTask"/>
+    </div>
+    <div class="bg-red-500">
+      <CardtaskComponent :tasks="inProgressTask" @deleteTask="deleteTask"/>
+    </div>
+    <div class="bg-red-500">
+      <CardtaskComponent :tasks="completeTask" @deleteTask="deleteTask"/>
+    </div>
+  </div>
+
+  <!-- <di v class="grid mx-5 my-5 grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
     <div
-      v-for="(proyecto, index) in proyect.task"
+      v-for="(task, index) in tasks"
       :key="index"
-      class=" hover:shadow-lg  flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]"
+      class="hover:shadow-lg flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]"
     >
       <div class="inline-grid grid-cols-2 gap-4">
         <h3 class="capitalize mt-1 text-lg font-bold text-gray-800 dark:text-white">
-          {{ proyecto.title }}
+          # {{ task.id }} {{ task.title }}
         </h3>
 
         <div class="relative">
           <div class="absolute top-0 right-0">
             <button
               type="button"
-              v-on:click="deleteTask(proyecto.id)"
+              v-on:click="deleteTask(task.id)"
               class="items-center h-4 w-4 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
             >
               <span class="sr-only">Close</span>
               <svg
-                class="w-3.5 h-3.5"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                viewBox="0 -960 960 960"
+                width="24"
               >
                 <path
-                  d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00648C7.05632 7.10078 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35252 7.80458 6.25822 7.71348L3.61171 5.06702L0.965207 7.71348C0.870907 7.80458 0.744606 7.85498 0.613506 7.85388C0.482406 7.85268 0.357007 7.80018 0.264297 7.70738C0.171597 7.61468 0.119017 7.48928 0.117877 7.35818C0.116737 7.22708 0.167126 7.10078 0.258206 7.00648L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z"
-                  fill="currentColor"
+                  d="M280-120q-33 0-56.5-23.5T200-200v-520q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h160q0-17 11.5-28.5T400-840h160q17 0 28.5 11.5T600-800h160q17 0 28.5 11.5T800-760q0 17-11.5 28.5T760-720v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
                 />
               </svg>
             </button>
           </div>
         </div>
       </div>
-      <p class="mt-1 text-xs font-medium uppercase text-gray-500 dark:text-gray-500">
-        Inicio {{ proyecto.start_date }} hasta {{ proyecto.end_date }}
-      </p>
-      <p class="mt-2 text-gray-800 dark:text-gray-400">
-        {{ proyecto.description }}
+
+      <div class="inline-flex gap-3 my-4">
+        <div class="hs-dropdown relative inline-flex [--placement:bottom-left]">
+          <button
+            :id="task.id"
+            type="button"
+            class="hs-dropdown-toggle py-1 px-2 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-600 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white dark:focus:ring-offset-gray-800"
+          >
+            {{
+              task.state === 'COMPLETE'
+                ? 'Completado'
+                : task.state === 'INPROGRESS'
+                ? 'En proceso'
+                : 'Pendiente'
+            }}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 -960 960 960"
+              width="24"
+              fill="currentColor"
+            >
+              <path
+                d="M452-388 348-492q-19-19-8.5-43.5T377-560h206q27 0 37.5 24.5T612-492L508-388q-6 6-13 9t-15 3q-8 0-15-3t-13-9Z"
+              />
+            </svg>
+          </button>
+
+          <div
+            class="hs-dropdown-menu w-auto transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden z-10 bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700"
+            :aria-labelledby="task.id"
+          >
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+              href="#"
+            >
+              Pendiente
+            </a>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+              href="#"
+            >
+              En curso
+            </a>
+            <a
+              class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+              href="#"
+            >
+              Completado
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-3 text-gray-800 dark:text-gray-400">
+        {{ task.description }}
       </p>
       <a
         class="mt-3 inline-flex items-center gap-2 mt-5 text-sm font-medium text-blue-500 hover:text-blue-700"
@@ -145,16 +205,19 @@
           />
         </svg>
       </a>
+      
     </div>
-  </div>
+  </div> -->
 </template>
 <script lang="ts">
 import axios from 'axios'
 import { defineComponent, type PropType, ref } from 'vue'
+import CardtaskComponent from '@/components/commons/TaskCardComponent.vue'
 
 export default defineComponent({
   name: 'ShowtaskComponent',
-  emits: ['showAllProyects'],
+  emits: ['getProyectSelected'],
+  components: { CardtaskComponent },
   props: {
     proyect: {
       type: Object as PropType<any>,
@@ -168,13 +231,34 @@ export default defineComponent({
       title: ref(),
       description: ref(),
       state: ref('0'),
-      createtask: ref(false)
+      createtask: ref(false),
+      proyect_id: ref(this.proyect.id),
+      pendingTask: ref(),
+      inProgressTask: ref(),
+      completeTask: ref(),
+      stateClass: ref('bg-red-500')
+    }
+  },
+  watch: {
+    proyect: {
+      handler({ id }) {
+        this.proyect_id = id
+        this.completeTask = []
+        this.inProgressTask = []
+        this.pendingTask = []
+        this.getAllTaskByProyectId()
+      },
+      immediate: true
     }
   },
   mounted() {
     this.getAllUsers()
+    this.getAllTaskByProyectId()
   },
   methods: {
+    getProyectSelected() {
+      this.$emit('getProyectSelected', this.proyect.id)
+    },
     setCreatetask() {
       this.createtask = !this.createtask
     },
@@ -185,7 +269,7 @@ export default defineComponent({
           {
             title: this.title,
             description: this.description,
-            state: this.state,
+            state: 'PENDING',
             proyect_id: proyect_id
           },
           {
@@ -196,7 +280,7 @@ export default defineComponent({
           }
         )
         this.createtask = false
-        this.showAllProyects()
+        this.getAllTaskByProyectId()
       } catch (error: any) {
         console.log(error.response.data.message)
       }
@@ -210,9 +294,33 @@ export default defineComponent({
           }
         })
         this.users = data.users
-        console.log(this.users)
       } catch (error: any) {
         console.log(error.response.data.message)
+      }
+    },
+    async getAllTaskByProyectId() {
+      try {
+        const { data } = await axios.get(
+          `http://127.0.0.1:8000/api/task/${this.proyect_id}/byproyect`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Accept: 'application/json'
+            }
+          }
+        )
+        console.log(data)
+
+      
+        this.completeTask = data.tasks.filter((task: any) => task.state === 'COMPLETE')
+        this.inProgressTask = data.tasks.filter((task: any) => task.state === 'INPROGRESS')
+        this.pendingTask = data.tasks.filter((task: any) => task.state === 'PENDING')
+
+      } catch (error: any) {
+        this.completeTask = []
+        this.inProgressTask = []
+        this.pendingTask = []
+        console.log(error.response?.data?.message)
       }
     },
     async assigneuser(task_id: any) {
@@ -229,7 +337,7 @@ export default defineComponent({
             }
           }
         )
-        this.showAllProyects()
+        this.getAllTaskByProyectId()
       } catch (error: any) {
         console.log(error.response.data.message)
       }
@@ -248,16 +356,34 @@ export default defineComponent({
             }
           }
         )
-        this.showAllProyects()
+        this.getAllTaskByProyectId()
       } catch (error: any) {
         console.log(error.response.data.message)
       }
     },
-    deleteTask(id: any) {
-      console.log(id)
-    },
-    showAllProyects() {
-      this.$emit('showAllProyects')
+    async deleteTask(task_id: string) {
+      try {
+        await axios.delete(`http://127.0.0.1:8000/api/task/${task_id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Accept: 'application/json'
+          }
+        })
+        this.getAllTaskByProyectId()
+        this.$toast.open({
+          message: `Tarea eliminada correctamente`,
+          type: 'error',
+          position: 'bottom-right'
+          // all of other options may go here
+        })
+      } catch (error: any) {
+        this.$toast.open({
+          message: `${error.response.data.message}`,
+          type: 'error',
+          position: 'bottom-right'
+          // all of other options may go here
+        })
+      }
     }
   }
 })

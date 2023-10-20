@@ -10,6 +10,7 @@ import('preline')
 import App from './App.vue'
 import router from './router'
 
+
 import './assets/main.css'
 import 'vue-toast-notification/dist/theme-default.css';
 
@@ -20,6 +21,8 @@ app.use(createPinia())
 app.use(ToastPlugin)
 app.use(router)
 
+
 app.component('VueDatePicker', VueDatePicker);
 
 app.mount('#app')
+

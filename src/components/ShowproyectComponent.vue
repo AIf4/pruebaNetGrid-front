@@ -43,8 +43,10 @@
         </div>
       </div>
     </div>
-    <p class="mt-1 text-xs font-medium uppercase text-gray-500 dark:text-gray-500">
-      Inicio {{ proyectos.start_date }} hasta {{ proyectos.end_date }}
+    <p class="mt-1 text-xs font-medium capitalize text-gray-500 dark:text-gray-500">
+      Inicio
+      {{ dayjs(proyectos.start_date).format('L') }} hasta
+      {{ dayjs(proyectos.end_date).format('L') }}
     </p>
     <p class="mt-2 text-gray-800 dark:text-gray-400">
       {{ proyectos.description }}
@@ -76,10 +78,21 @@
 <script lang="ts">
 import axios from 'axios'
 import { defineComponent, type PropType } from 'vue'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import 'dayjs/locale/es'
+
+dayjs.extend(localizedFormat)
+dayjs.locale('es')
 
 export default defineComponent({
   name: 'ShowproyectComponent',
   emits: ['showAllProyects', 'showTask'],
+  setup() {
+    return {
+      dayjs: dayjs
+    }
+  },
   props: {
     proyects: {
       type: Array as PropType<any>

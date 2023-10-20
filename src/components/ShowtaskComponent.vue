@@ -66,19 +66,6 @@
         />
       </div>
 
-      <div class="col-span-4 sm:col-span-3">
-        <label for="LastName" class="block text-sm font-medium text-gray-700"> Estado </label>
-
-        <select
-          v-model="state"
-          class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-        >
-          <option value="0">Selecciona el estado de la tarea</option>
-          <option value="PENDING">Pendiente</option>
-          <option value="INPROGRESS">En progreso</option>
-          <option value="COMPLETE">Completada</option>
-        </select>
-      </div>
     </form>
   </div>
 

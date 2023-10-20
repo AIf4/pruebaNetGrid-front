@@ -8,7 +8,7 @@
       <div>
         <label for="title" class="sr-only">Titulo</label>
 
-        <div class="relative">
+        
           <input
             type="text"
             id="title"
@@ -16,52 +16,25 @@
             placeholder="Titulo del proyecto"
             v-model="title"
           />
-
-          <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="none"
-              class="h-4 w-4 text-gray-400"
-              viewBox="0 0 16 16"
-              stroke="currentColor"
-            >
-              <path
-                d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-              />
-            </svg>
-          </span>
-        </div>
+        
       </div>
       <div>
         <label for="description" class="sr-only">Descripcion</label>
 
         <div class="relative">
-          <input
+          <!-- <input
             type="text"
             id="description"
             class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
             placeholder="Ingresa una descripcion"
             v-model="description"
-          />
-
-          <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-              />
-            </svg>
-          </span>
+          /> -->
+          <textarea
+            class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+            rows="3"
+            placeholder="Descripción del proyecto"
+            v-model="description"
+          ></textarea>
         </div>
       </div>
       <VueDatePicker v-model="date" range locale="es" cancelText="Cancelar" selectText="Aceptar" />
@@ -105,8 +78,7 @@ export default defineComponent({
   },
   methods: {
     async createUser() {
-      console.log(this.date)
-      this.isLoading = true;
+      this.isLoading = true
       try {
         await axios.post(
           'http://127.0.0.1:8000/api/proyect',
@@ -124,13 +96,13 @@ export default defineComponent({
           }
         )
         this.showAllProyects()
-        
+
         this.$toast.open({
           message: `Proyecto creado correctamente`,
           type: 'success',
           position: 'bottom-right'
         })
-        this.isLoading = false;
+        this.isLoading = false
       } catch (error: any) {
         console.log(error.response.data.message)
         this.$toast.open({
@@ -138,7 +110,7 @@ export default defineComponent({
           type: 'error',
           position: 'bottom-right'
         })
-        this.isLoading = false;
+        this.isLoading = false
       }
     },
     showAllProyects() {
